@@ -13,16 +13,16 @@ Similar to the EKS Optimized AMI, this AMI is built using the same tooling.
 # build a x86 AMI for EKS
 packer build \
   -var 'eks_version=1.18' \
-  -var 'vpc_id=vpc-0e8cf1ce122b1b059' \
-  -var 'subnet_id=subnet-0eddf1d7d0f9f9772' \
+  -var 'vpc_id=vpc-xxxxxxxxxxxxxxxxx' \
+  -var 'subnet_id=subnet-xxxxxxxxxxxxxxxxx' \
   -var 'volume_size=100' \
   ./amazon-eks-node.json
 
   # build a arm64 AMI for EKS
 packer build \
   -var 'eks_version=1.18' \
-  -var 'vpc_id=vpc-0e8cf1ce122b1b059' \
-  -var 'subnet_id=subnet-0eddf1d7d0f9f9772' \
+  -var 'vpc_id=vpc-xxxxxxxxxxxxxxxxx' \
+  -var 'subnet_id=subnet-xxxxxxxxxxxxxxxxx' \
   -var 'volume_size=100' \
   ./amazon-eks-node-arm64.json
 ```
