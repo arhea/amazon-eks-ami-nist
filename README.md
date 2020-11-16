@@ -34,6 +34,40 @@ packer build \
 | subnet_id | | `subnet-xxxxxxxxxxxxxxxxx` | The ID of the Subnet to place the Packer builder. |
 | volume_size | `100` | Any whole number in Gb | The size of the secondary volume. |
 
+## Hardening
+
+This repository applies the following benchmarks as part of the NIST 800-53 requirements:
+
+- [Amazon Linux 2 CIS Benchmark](https://www.cisecurity.org/benchmark/amazon_linux/)
+- [Docker CIS Benchmark](https://www.cisecurity.org/benchmark/docker/)
+- [Amazon EKS CIS Benchmark](https://aws.amazon.com/about-aws/whats-new/2020/07/announcing-cis-benchmark-for-amazon-eks/)
+
+The repository also utilizes the Amazon Linux 2 FIPS validated modules:
+
+| Module | Status | Certification | Date |
+|--------|:---:|:-----:|:---:|
+| Amazon Linux 2 Libreswan Cryptographic Module | :white_check_mark: | [3652](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3652) | 05/08/2020 |
+| Amazon Linux 2 NSS Cryptographic Module | :white_check_mark: | [3646](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3646) | 04/20/2020 |
+| Amazon Linux 2 GnuTLS Cryptographic Module | :white_check_mark: | [3643](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3643) | 04/20/2020 |
+| Amazon Linux 2 Libgcrypt Cryptographic Module | :white_check_mark: | [3618](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3618) | 02/19/2020 |
+| Amazon Linux 2 OpenSSH Client Cryptographic Module | :white_check_mark: | [3567](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3567) | 11/20/2019 |
+| Amazon Linux 2 OpenSSH Server Cryptographic Module | :white_check_mark: | [3562](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3562) | 11/14/2019 |
+| Amazon Linux 2 OpenSSL Cryptographic Module | :white_check_mark: | [3553](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3553) | 10/23/2019 |
+| Amazon Linux 2 Kernel Cryptographic API | :white_check_mark: | [3709](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3709) | 09/14/2020  |
+
+## Disk Layout
+
+The resulting images consists of two disks, a root disk and a secondary disk. The secondary disk is used to add the required partitions to meet CIS Benchmark requirements.
+
+| Disk | Mount Point | Description |
+|------|------|-------------|
+| `/dev/nvme1n1p1` |`/` | This is the root disk used by the EKS optimized AMI. |
+| `/dev/nvme2n1p1` | `/var` | A separate partition for `/var` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p2` | `/var/log` | A separate partition for `/var/log` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p3` | `/var/log/audit` | A separate partition for `/var/log/audit` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p4` | `/home` | A separate partition for `/home` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p5` | `/var/lib/docker` | A separate partition for `/var/lib/docker` as required by the CIS Benchmark. |
+
 ## License
 
 This library is licensed under the MIT-0 License. See the [LICENSE file](./LICENSE).
