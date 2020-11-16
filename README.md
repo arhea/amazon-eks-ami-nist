@@ -60,7 +60,7 @@ The repository also utilizes the Amazon Linux 2 FIPS validated modules:
 The resulting images consists of two disks, a root disk and a secondary disk. The secondary disk is used to add the required partitions to meet CIS Benchmark requirements.
 
 | Disk | Mount Point | % of Secondary Volume Size | Description |
-|------|------|-------------|
+|------|-------------|----------------------------|-------------|
 | `/dev/nvme1n1p1` |`/` | 20% | This is the root disk used by the EKS optimized AMI. |
 | `/dev/nvme2n1p1` | `/var` | 20% | A separate partition for `/var` as required by the CIS Benchmark. |
 | `/dev/nvme2n1p2` | `/var/log` | 20% | A separate partition for `/var/log` as required by the CIS Benchmark. |
