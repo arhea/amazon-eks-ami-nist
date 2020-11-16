@@ -2,7 +2,7 @@
 
 This AMI extends the [Amazon EKS Optimized AMI](https://github.com/awslabs/amazon-eks-ami) with the hardening typically required to meet NIST 800-53 based compliance frameworks such as FedRAMP. This repository uses Packer to enable FIPS 140-2 validated modules and apply the [Amazon Linux 2](https://www.cisecurity.org/benchmark/amazon_linux/), [Docker](https://www.cisecurity.org/benchmark/docker/), and [EKS](https://aws.amazon.com/about-aws/whats-new/2020/07/announcing-cis-benchmark-for-amazon-eks/) CIS Benchmarks.
 
-*Disclaimer: This AMI is not gaurenteed to meet FedRAMP requirements and you should always confirm with your compliance, security, and 3PAO that this AMI is sufficient. This is not an official AMI from Amazon or AWS.*
+*Disclaimer: This AMI is not gaurenteed to meet FedRAMP requirements and you should always confirm with your compliance, security, and 3PAO that this AMI is sufficient. This is not an official AMI from AWS and is not officially supported.*
 
 ## Usage
 
@@ -59,14 +59,14 @@ The repository also utilizes the Amazon Linux 2 FIPS validated modules:
 
 The resulting images consists of two disks, a root disk and a secondary disk. The secondary disk is used to add the required partitions to meet CIS Benchmark requirements.
 
-| Disk | Mount Point | Description |
+| Disk | Mount Point | % of Secondary Volume Size | Description |
 |------|------|-------------|
-| `/dev/nvme1n1p1` |`/` | This is the root disk used by the EKS optimized AMI. |
-| `/dev/nvme2n1p1` | `/var` | A separate partition for `/var` as required by the CIS Benchmark. |
-| `/dev/nvme2n1p2` | `/var/log` | A separate partition for `/var/log` as required by the CIS Benchmark. |
-| `/dev/nvme2n1p3` | `/var/log/audit` | A separate partition for `/var/log/audit` as required by the CIS Benchmark. |
-| `/dev/nvme2n1p4` | `/home` | A separate partition for `/home` as required by the CIS Benchmark. |
-| `/dev/nvme2n1p5` | `/var/lib/docker` | A separate partition for `/var/lib/docker` as required by the CIS Benchmark. |
+| `/dev/nvme1n1p1` |`/` | 20% | This is the root disk used by the EKS optimized AMI. |
+| `/dev/nvme2n1p1` | `/var` | 20% | A separate partition for `/var` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p2` | `/var/log` | 20% | A separate partition for `/var/log` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p3` | `/var/log/audit` | 20% | A separate partition for `/var/log/audit` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p4` | `/home` | 10% | A separate partition for `/home` as required by the CIS Benchmark. |
+| `/dev/nvme2n1p5` | `/var/lib/docker` | 30% | A separate partition for `/var/lib/docker` as required by the CIS Benchmark. |
 
 ## License
 
